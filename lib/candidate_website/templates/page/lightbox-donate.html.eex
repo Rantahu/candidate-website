@@ -1,0 +1,54 @@
+<div id="fade" onclick="lightbox_close()"></div>
+<div id="lightbox-donate">
+  <div id="donate-box">
+    <div id="close-lightbox" onclick="lightbox_close()">x</div>
+    <h1 id="lightbox-donate-text" style="color: <%=@primary_color %>">Donate to My Campaign</h1>
+
+    <div id="circles-container">
+      <%= for amount <- [5, 14, 27, 50] do %>
+        <div id="circle-<%= amount %>">
+          <a class="circle" href="<%= @donate_url <> "?amount=#{amount}"%>">
+            <span class="amount">$<%= amount %></span>
+            <!-- <span class="dollars">dollars</span> -->
+          </a>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="custom-donation-container" class="custom-donation-container">
+        <input id="custom-contribution" type="number" placeholder="$27.00"/>
+        <a href="<%= @donate_url %>" id="ocustom-contribution-go" class="contribute button">Contribute</a>
+    </div>
+  </div>
+</div>
+<style>
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+  const el = document.querySelector('#custom-contribution');
+  const go = document.querySelector('#custom-contribution-go');
+
+  if ( Cookies.get('has_visited') == null ) {
+    lightbox_open();
+    Cookies.set('has_visited', true);
+  }
+
+  function lightbox_open() {
+    window.scrollTo(0,0);
+    document.getElementById('lightbox-donate').style.display='block';
+    document.getElementById('fade').style.display='block';
+  }
+
+  function lightbox_close() {
+    document.getElementById('lightbox-donate').style.display='none';
+    document.getElementById('fade').style.display='none';
+  }
+
+</script>
