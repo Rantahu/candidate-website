@@ -11,6 +11,7 @@ defmodule CandidateWebsite.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
+    plug(CORSPlug)
   end
 
   scope "/api", CandidateWebsite do
@@ -18,6 +19,7 @@ defmodule CandidateWebsite.Router do
 
     get("/update/cosmic", UpdateController, :get_cosmic)
     post("/update/cosmic", UpdateController, :post_cosmic)
+    get("/events", UpdateController, :get_events)
   end
 
   scope "/", CandidateWebsite do
